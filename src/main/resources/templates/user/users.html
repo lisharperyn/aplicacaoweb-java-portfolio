@@ -34,10 +34,9 @@
                                             <td th:text="${user.cpf}"></td>
                                             <td th:text="${user.email}"></td>
                                             <td th:text="${user.address}"></td>
-                                            <td> <button  class="btn btn-warning"> Alterar</button> </td>
-                                            <td> <button class="btn btn-danger">Excluir</button> </td>
+                                            <td> <a th:href="@{'/usuarios/' + ${user.id}}" class="btn btn-warning">Alterar</a> </td>
+                                            <td> <a th:href="@{/usuarios/delete/__${user.id}__}" onclick="return confirm('Tem certeza que deseja excluir o registro?')" class="btn btn-danger">Excluir</a></td>
                                         </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -45,7 +44,7 @@
                     </div>
 
                 </div>
-                <!-- /.container-fluid -->
+                <!-- /.container-fluid  -->
                 </div>
                <!-- End of Main Content -->
 <div th:replace="shared/footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>
