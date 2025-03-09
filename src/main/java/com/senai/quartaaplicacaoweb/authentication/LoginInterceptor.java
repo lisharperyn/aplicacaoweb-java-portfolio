@@ -1,3 +1,4 @@
+/*
 package com.senai.quartaaplicacaoweb.authentication;
 
 import com.senai.quartaaplicacaoweb.services.CookieService;
@@ -17,3 +18,4 @@ public class  LoginInterceptor implements HandlerInterceptor {
         }
     }
 }
+*/

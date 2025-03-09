@@ -1,4 +1,4 @@
-package com.senai.quartaaplicacaoweb.authentication;
+/*package com.senai.quartaaplicacaoweb.authentication;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -22,3 +22,4 @@ public class LoginInterceptorAppConfig extends WebMvcConfigurerAdapter {
                 );
     }
 }
+*/

@@ -23,18 +23,19 @@ public class LoginController {
         return "login/login";
     }
 
-    /*
     @GetMapping(value="/logout")
     public String logout(HttpServletResponse response){
-        CookieService.setCookie(response,"usuarioId","", 0);
+        CookieService.setCookie(response,"usuarioId","", 0); //Remove o cookie de autenticação
         return "redirect:/login";
-    } */
+    }
 
     @PostMapping  (value = "/logar")
-    public String logOn(UserModel userModel, Model model){
+    public String logOn(UserModel userModel, HttpServletResponse response){
         UserModel user = loginService.logar(userModel);
 
         if (user != null){
+            //Cria um cookie pra manter o usuário logado
+            CookieService.setCookie(response, "usuarioId", String.valueOf(user.getId()), 3600);
             return "redirect:/";
         } else {
             return "login/login";

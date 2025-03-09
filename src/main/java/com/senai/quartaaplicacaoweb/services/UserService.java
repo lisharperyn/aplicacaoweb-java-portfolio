@@ -14,7 +14,7 @@ public class UserService {
     private UserRepositorie userRepositorie;
 
 
-    public UserModel saveUser(UserModel userModel){
+    public UserModel save(UserModel userModel){
       return userRepositorie.save(userModel);
     }
 
