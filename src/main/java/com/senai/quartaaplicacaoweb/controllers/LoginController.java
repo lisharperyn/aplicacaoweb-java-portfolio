@@ -5,6 +5,7 @@ import com.senai.quartaaplicacaoweb.services.CookieService;
 import com.senai.quartaaplicacaoweb.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,16 +30,21 @@ public class LoginController {
         return "redirect:/login";
     }
 
-    @PostMapping  (value = "/logar")
-    public String logOn(UserModel userModel, HttpServletResponse response){
+
+    @PostMapping(value = "/logar")
+    public String logOn(UserModel userModel, HttpServletResponse response, Model model){
+        System.out.println("Tentativa de login com e-mail: " + userModel.getEmail()); // Log
         UserModel user = loginService.logar(userModel);
 
         if (user != null){
-            //Cria um cookie pra manter o usuário logado
+            System.out.println("Usuário encontrado: ID = " + user.getId()); // Log
+            // Cria um cookie para manter o usuário logado
             CookieService.setCookie(response, "usuarioId", String.valueOf(user.getId()), 3600);
-            return "redirect:/";
+            return "redirect:/"; // Redireciona para a página inicial
         } else {
-            return "login/login";
+            System.out.println("Usuário não encontrado ou credenciais inválidas"); // Log
+            model.addAttribute("erro", "E-mail ou senha inválidos"); // Mensagem de erro
+            return "login/login"; // Credenciais inválidas: recarrega a página de login
         }
     }
 }

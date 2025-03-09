@@ -12,18 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/")
 public class HomeController {
 
-    @GetMapping
-    public String index(Model model, HttpServletRequest request){
-        // Verifica se o usuário está autenticado
+    @GetMapping("/")
+    public String home(HttpServletRequest request, Model model){
         String usuarioId = CookieService.getCookie(request, "usuarioId");
 
         if (usuarioId != null && !usuarioId.isEmpty()) {
-            // Usuário autenticado: exibe a página inicial
+            System.out.println("Usuário autenticado. Exibindo página inicial."); // Log
             model.addAttribute("nome", CookieService.getCookie(request, "nome"));
-            return "home/index";
+            return "home/index"; // Página inicial
         } else {
-            // Usuário não autenticado: redireciona para a página de login
-            return "redirect:/login";
+            System.out.println("Usuário não autenticado. Redirecionando para o login."); // Log
+            return "redirect:/login"; // Redireciona para a página de login
         }
     }
 }
