@@ -14,7 +14,16 @@ public class HomeController {
 
     @GetMapping
     public String index(Model model, HttpServletRequest request){
-        model.addAttribute("nome", CookieService.getCookie(request, "nome"));
-        return "home/index";
+        // Verifica se o usuário está autenticado
+        String usuarioId = CookieService.getCookie(request, "usuarioId");
+
+        if (usuarioId != null && !usuarioId.isEmpty()) {
+            // Usuário autenticado: exibe a página inicial
+            model.addAttribute("nome", CookieService.getCookie(request, "nome"));
+            return "home/index";
+        } else {
+            // Usuário não autenticado: redireciona para a página de login
+            return "redirect:/login";
+        }
     }
 }

@@ -1,18 +1,14 @@
 package com.senai.quartaaplicacaoweb.controllers;
 
 import com.senai.quartaaplicacaoweb.models.UserModel;
+import com.senai.quartaaplicacaoweb.services.CookieService;
 import com.senai.quartaaplicacaoweb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-/*
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-*/
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,10 +20,16 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public String getAllUsers(Model model){
-        List<UserModel> listUser = userService.findAll();
-        model.addAttribute("users",listUser);
-        return "user/users";
+    public String getAllUsers(HttpServletRequest request, Model model){
+        String usuarioId = CookieService.getCookie(request, "usuarioId");
+
+        if (usuarioId != null && !usuarioId.isEmpty()) {
+            List<UserModel> listUser = userService.findAll();
+            model.addAttribute("users", listUser);
+            return "user/users"; // Página de usuários protegida
+        } else {
+            return "redirect:/login"; // Redireciona para a página de login
+        }
     }
 
     @GetMapping(value = "/registro")
